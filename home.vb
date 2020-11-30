@@ -14,6 +14,7 @@ Public Class Photographer
 
     Private siteInEdit As Integer = 0
     Private outDirectory As String = ""
+    Private browserInitialised = False
 
 #Region "Site Capture Execution"
 
@@ -29,7 +30,7 @@ Public Class Photographer
                     Command.Parameters.Add("@cbox_class", SqlDbType.NVarChar, 200).Direction = ParameterDirection.Output
                     conn.Open()
                     Command.ExecuteNonQuery()
-                    If Command.Parameters("@id") IsNot Nothing Then
+                    If Command.Parameters("@id").Value IsNot DBNull.Value Then
                         SiteNow.siteid = Command.Parameters("@id").Value
                         SiteNow.siteName = Command.Parameters("@sitename").Value
                         SiteNow.url = Command.Parameters("@url").Value
@@ -39,6 +40,8 @@ Public Class Photographer
                         browser.Load(SiteNow.url)
                     Else
                         SetOutput("No More Rows to capture. Stopping...")
+                        UpdateStartButton()
+                        SetOutput("Stopped..")
                     End If
                 End Using
             End Using
@@ -148,7 +151,12 @@ Public Class Photographer
                 lvl_out_directory.Enabled = False
                 SetOutput("Starting Application")
                 GenrateKeyIndex()
-                InitialiseBrowser()
+                If browserInitialised = False Then
+                    browserInitialised = True
+                    InitialiseBrowser()
+                Else
+                    ProcessNextItem()
+                End If
             End If
         Else
             stopRequested = True
@@ -509,6 +517,4 @@ Public Class Photographer
     Private Sub btn_exit_Click(sender As Object, e As EventArgs) Handles btn_exit.Click
         Application.Exit()
     End Sub
-
-
 End Class
