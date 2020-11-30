@@ -167,10 +167,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="default.mdf">
+    <Content Include="data\default.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="default_log.ldf">
+    <Content Include="data\default_log.ldf">
       <DependentUpon>default.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

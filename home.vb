@@ -7,7 +7,8 @@ Imports System.Data.SqlClient
 Public Class Photographer
     Private stopRequested As Boolean = False
     Private WithEvents browser As ChromiumWebBrowser
-    Private ConString As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Saurabh\Desktop\freelancer\siteCapture\siteCapture\default.mdf;Integrated Security=True;Connect Timeout=30"
+    Private dbpath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "data\default.mdf")
+    Private ConString As String = "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + dbpath + ";Integrated Security=True;Connect Timeout=30"
     Delegate Sub UpdateOutText(text As String)
     Delegate Sub DelUpdateStartButton()
     Private SiteNow As New curruntSite()
